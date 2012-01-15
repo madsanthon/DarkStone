@@ -1,6 +1,7 @@
 # Projektbeskrivelse
 
 Projektet har til formål at fremstille to algoritmer og implementering af disse i form af computerprogrammer, der hver udfører følgende:
+
 1. Almindelig løser til n-legemeproblemet.
 2. En specifik kode til at afprøve ROI for dark matter.
 
