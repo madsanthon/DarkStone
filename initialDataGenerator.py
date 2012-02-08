@@ -18,6 +18,6 @@ if len(sys.argv) > 1 and int(sys.argv[1]) > 0:
 
 # Generate a N x 6 matrix and save it
 data = np.random.rand(N, 6)
-res = np.savetxt('initialData-N' + str(N) + '.txt', data)
+np.savetxt('initialData-N' + str(N) + '.txt', data)
 
 print 'Data file with', N, 'particles has been generated.'
