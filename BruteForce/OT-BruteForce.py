@@ -10,15 +10,17 @@ __version__     = "0.7"
 import numpy as np
 import time
 import sys
+import os
 
 TIME_START = time.time() # Used for benchmarking
 
-dataFile = '../initialData-N10.txt' # Default test file
+path = os.path.dirname(os.path.realpath(__file__))
+dataFile = 'initialData-N10.txt' # Default test file
 
 if len(sys.argv) > 1:
     dataFile = sys.argv[1]
 
-data = np.loadtxt(dataFile)
+data = np.loadtxt(path + '/' + dataFile)
 
 T = 10          # Total time, seconds
 dt = 0.1        # Time step, seconds
@@ -53,5 +55,5 @@ for t in np.arange(0, T, dt):
         data[i][3:6] = vii
 
 # Output data
-np.savetxt('OT-BruteForce-EndData-N' + str(N) + '.txt', data);
+np.savetxt(path + '/OT-BruteForce-EndData-N' + str(N) + '.txt', data);
 print 'Run time:', time.time() - TIME_START
