@@ -8,7 +8,7 @@
 
 import numpy as np
 
-print "Press a number of particles you want to generate coordinates and velocities to"
+print("n:")
 n = input()
 
 data = np.random.rand(n,6);
