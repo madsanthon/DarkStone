@@ -31,6 +31,7 @@ N = len(data)   # Number of points
 print 'Simulating', N, 'particles...'
 
 for t in np.arange(0, T, dt):
+    dataCopy = np.copy(data)
     for i in range(N):
         # Latest position and velocity (of i'th particle)
         xi = data[i][0:3]
@@ -39,8 +40,9 @@ for t in np.arange(0, T, dt):
         # Determine acceleration (of i'th particle)
         a = np.zeros(3)
         for j in range(N):
-            # Resulting vector between the i'th and the j'th particle
-            r = data[j][0:3] - xi
+            # Resulting vector between the i'th and the j'th particle.
+            # We use dataCopy because we do not want the updated positions.
+            r = dataCopy[j][0:3] - xi
             if np.linalg.norm(r) > 0.0: # Avoid division by zero
                 a = a + (1.0/np.linalg.norm(r))*r
         
