@@ -15,12 +15,12 @@ import os
 TIME_START = time.time() # Used for benchmarking
 
 path = os.path.dirname(os.path.realpath(__file__))
-dataFile = 'initialData-N10.txt' # Default test file
+dataFile = path + '/initialData-N10.txt' # Default test file
 
 if len(sys.argv) > 1:
     dataFile = sys.argv[1]
 
-data = np.loadtxt(path + '/' + dataFile)
+data = np.loadtxt(dataFile)
 
 T = 10          # Total time, seconds
 dt = 0.1        # Time step, seconds
