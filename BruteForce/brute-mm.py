@@ -12,7 +12,7 @@ start_t = 0
 slut_t = 10
 dt = 0.1
 
-data = np.loadtxt('my_data_10.txt');
+data = np.loadtxt('initialData-N10.txt');
 
 a = np.zeros((10,3));
 for i in range(10):
@@ -32,5 +32,5 @@ while t <= slut_t:
         data[i,:3] = data[i,:3] + data[i,3: ]* dt       # Opdatér positioner
     t += dt
 print data
-print data.shape
-print 
+
+np.savetxt('MM-BruteForce-EndData-N10.txt',data);
