@@ -44,7 +44,7 @@ for t in np.arange(0, T, dt):
             # We use dataCopy because we do not want the updated positions.
             r = dataCopy[j][0:3] - xi
             if np.linalg.norm(r) > 0.0: # Avoid division by zero
-                a = a + (1.0/np.linalg.norm(r))*r
+                a = a + (1.0/np.linalg.norm(r)**2)*r
         
         a = G*a
         
