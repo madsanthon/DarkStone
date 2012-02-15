@@ -1,0 +1,11 @@
+\section{Brute-force metoden}
+
+Vi kender kraften forårsaget af tyngdekraften\footnote{Massetiltrækningen} som er $F_g = G \frac{m_1 m_2}{r^2}$, og vi har også at Newtons anden lov siger at $F = m \vec{a}$. For en partikel $i$ i et system med $N$-partikler har accelerationen:
+\begin{align}
+m_i \vec{a_i} &= G\sum_{j=1}\dfrac{m_i m_j}{r_{i,j}^2}(\vec{P_j}-\vec{P_i}) \Rightarrow \\
+\vec{a_i} &= \sum_{j=1}\dfrac{m_j}{r_{i,j}^2}(\vec{P_j}-\vec{P_i}) 
+\end{align}
+
+Vi har ikke konstant acceleration, da vi ikke har et system i bevægelse, $\sum F \neq 0$. Hvis vi betragter øjebliksbilledet $dt$, så har partiklerne tilnærmelsesvis konstant acceleration. Det udnytter vi og får følgende hhv. hastighed og position:
+\[\vec{v_i}=\vec{v_{i-1}} + \vec{a_i} \cdot dt \]
+\[\vec{P_i}=\vec{P_{i-1}} + \vec{v_{i-1}} \cdot dt\]
