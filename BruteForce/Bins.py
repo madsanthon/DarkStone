@@ -103,20 +103,20 @@ if __name__ == "__main__":
 
     N = data.shape[0]
     npb = int(N/5);
-    #plt.figure(1)
+    
     fig = plt.figure(1)
+    color = ['y','r','c','g','b']
+    j = 0
     ax = fig.add_subplot(111, projection='3d')
     for bin in bins_indices(pos,npb):
         #print "Bin has particles with following indices:\n",bin
         #print "Velocity of bin particles:",bin_velocity(vel,bin)
         #print "Sigma squared:",bin_sigma(vel,bin)
         #print "Volume of bin:",bin_volume(pos, bin)
-        #print pos[bin,:]
-        #plt.plot(pos[bin,0],pos[bin,1],'o')
-            
-        print bin
-
-        ax.scatter(pos[bin,0],pos[bin,1],pos[bin,2])#, c=cs, marker=m)
+        print 
+        ax.scatter(pos[bin,0],pos[bin,1],pos[bin,2], c=color[j])
+        j += 1
+        
 ax.set_xlabel('X Label')
 ax.set_ylabel('Y Label')
 ax.set_zlabel('Z Label')
