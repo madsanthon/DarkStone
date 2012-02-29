@@ -3,6 +3,8 @@ from __future__ import division
 import numpy as np
 import scipy
 import scipy.spatial.distance as dist
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
 
 
 def GetParticleData(data):
@@ -98,13 +100,28 @@ if __name__ == "__main__":
     data = np.loadtxt("initialData-N10.txt");
     #Splits the data, so it is in three different variables
     pos, vel, m = GetParticleData(data);
-    
-    npb = 5;
+
+    N = data.shape[0]
+    npb = int(N/5);
+    #plt.figure(1)
+    fig = plt.figure(1)
+    ax = fig.add_subplot(111, projection='3d')
     for bin in bins_indices(pos,npb):
-        print "Bin has particles with following indices:\n",bin
-        print "Velocity of bin particles:",bin_velocity(vel,bin)
-        print "Sigma squared:",bin_sigma(vel,bin)
-        print "Volume of bin:",bin_volume(pos, bin)
+        #print "Bin has particles with following indices:\n",bin
+        #print "Velocity of bin particles:",bin_velocity(vel,bin)
+        #print "Sigma squared:",bin_sigma(vel,bin)
+        #print "Volume of bin:",bin_volume(pos, bin)
+        #print pos[bin,:]
+        #plt.plot(pos[bin,0],pos[bin,1],'o')
+            
+        print bin
+
+        ax.scatter(pos[bin,0],pos[bin,1],pos[bin,2])#, c=cs, marker=m)
+ax.set_xlabel('X Label')
+ax.set_ylabel('Y Label')
+ax.set_zlabel('Z Label')
+
+plt.show()
     
     
     
