@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 """initialDataGenerator.py: This file generates <N> particle start
 positions and velocities. The data is saved into a file called 
