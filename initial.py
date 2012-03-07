@@ -12,7 +12,7 @@ __version__     = "0.7"
 import numpy as np
 import sys
 
-N = 1000 # Default
+N = 10 # Default
 
 if len(sys.argv) > 1 and int(sys.argv[1]) > 0:
     N = int(sys.argv[1])

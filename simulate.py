@@ -29,4 +29,4 @@ for t in np.arange(0, T, dt):
 
 print 'Run time:', time.time() - TIME_START
 
-np.savetxt('endData-N' + str(N) + '.txt', data)
+np.savetxt(path + '/Test/endData-N' + str(N) + '-' + time.strftime('%Y-%m-%d %H:%M') + '.txt', data)
