@@ -14,21 +14,19 @@ if len(sys.argv) > 1:
     dataFile = sys.argv[1]
 
 data = np.loadtxt(dataFile)
+N = data.shape[0]
 
 T = 10   # Total time, seconds
 dt = 0.1 # Time step, seconds
 
-print 'Simulating', data.shape[0], 'particles...'
+print 'Simulating', N, 'particles...'
 
-print 'Data before:'
-print data
+TIME_START = time.time() # Used for benchmarking
 
 for t in np.arange(0, T, dt):
     print t
-    data = nBody(data, dt)
+    nBody(data, dt)
 
-print
-print 'Data after', T, 'seconds:'
-print data
+print 'Run time:', time.time() - TIME_START
 
-print 'Done.'
+np.savetxt('endData-N' + str(N) + '.txt', data)
