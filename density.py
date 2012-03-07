@@ -73,7 +73,7 @@ print 'T =', T
 # Iterate over T (theoretic) dynamic times
 for t in np.arange(0, T, dt):
     print t
-    data = nBody(data, dynT*dt)
+    data = nBody(data, dynT*dt, G)
     
     if 0.0 + int(t) == t:
         densityPlot(data, t)
