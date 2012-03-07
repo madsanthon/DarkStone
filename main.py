@@ -5,7 +5,7 @@ import numpy as np
 import sys
 import time
 import os
-from bruteforce.ot import *
+from BruteForce.ot import *
 
 path = os.path.dirname(os.path.realpath(__file__))
 dataFile = path + '/initialData-N10.txt' # Default test file
