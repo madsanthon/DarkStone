@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 """animation.py: Animation of a small n-body system"""
 
@@ -12,7 +13,7 @@ import time
 import sys
 import os
 import visual
-from bruteforce.ot import *
+from bruteforce import *
 
 path = os.path.dirname(os.path.realpath(__file__))
 dataFile = path + '/initialData-N10.txt'

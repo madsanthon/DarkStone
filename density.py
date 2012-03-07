@@ -12,7 +12,7 @@ import sys
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-from bruteforce.ot import *
+from bruteforce import *
 
 def densityPlot(data, t):
     # Determine center of mass
@@ -61,19 +61,19 @@ if len(sys.argv) > 1:
 
 data = np.loadtxt(dataFile)
 
-G = 6.67e-11              # Gravitational constant
+G = 1                     # Gravitational constant
 N = data.shape[0]         # Number of particles
 rho = N/1.0               # Number of particles per 1m^3
 dynT = 1.0/np.sqrt(G*rho) # Dynamic time
 dt = 0.1                  # Time step, relative to the dynamic time
-T = 16                    # Number of dynamic times to iterate over
+T = 4                     # Number of dynamic times to iterate over
 
 print 'T =', T
 
 # Iterate over T (theoretic) dynamic times
 for t in np.arange(0, T, dt):
     print t
-    data = nBody(data, dynT*dt)
+    data = nBody(data, dynT*dt, G)
     
     if 0.0 + int(t) == t:
         densityPlot(data, t)
