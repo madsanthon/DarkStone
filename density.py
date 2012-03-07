@@ -61,12 +61,12 @@ if len(sys.argv) > 1:
 
 data = np.loadtxt(dataFile)
 
-G = 6.67e-11              # Gravitational constant
+G = 1                     # Gravitational constant
 N = data.shape[0]         # Number of particles
 rho = N/1.0               # Number of particles per 1m^3
 dynT = 1.0/np.sqrt(G*rho) # Dynamic time
 dt = 0.1                  # Time step, relative to the dynamic time
-T = 16                    # Number of dynamic times to iterate over
+T = 4                     # Number of dynamic times to iterate over
 
 print 'T =', T
 
