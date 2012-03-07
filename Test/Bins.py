@@ -6,6 +6,7 @@ import scipy.spatial.distance as dist
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 
+#Version: 0.2
 
 def GetParticleData(data):
     """ Takes a parameter called data that consists of a matrix with
@@ -33,7 +34,7 @@ def bins_indices(pos, npb):
 
 def GetDistancesFromOrigo(pos):
     """ Returns a list of distances for the positions given in param pos."""
-    return [scipy.spatial.distance.euclidean(np.array([0, 0, 0]), pos[i, :]) for i in range(pos.shape[0])];
+    return [scipy.spatial.distance.euclidean(np.array([0, 0, 0]), pos[i, :]) for i in range(len(pos))];
 
 def GetDistancesFromPoint(P, pos):
     """ Finds the euclidiean distance between point P and all points in Positions matrix.
@@ -44,7 +45,7 @@ def GetDistancesFromPoint(P, pos):
          and rows correspond to points. 
          
          """
-    return [scipy.spatial.distance.euclidean(P, pos[i, :]) for i in range(pos.shape[0])];
+    return [scipy.spatial.distance.euclidean(P, pos[i, :]) for i in range(len(pos))];
 
 def argsort(seq):
     """ Returns the indices of the elements of the iterable, such that the indices correspond to the sorted iterable."""
@@ -58,7 +59,7 @@ def chunks(l, n):
     for i in xrange(0, len(l), n):
         yield l[i:i + n]
 
-def bin_mass(mass, bin_indices):
+def bin_mass(mass, bin):
     """ Given all the particles masses, it gives the sum of all masses in the given bin's indices.
     
     Keyword arguments:
@@ -66,7 +67,7 @@ def bin_mass(mass, bin_indices):
     bin_indices -- consist of the given bins indices
     
     """
-    return sum(mass[bin_indices,:])
+    return sum(mass[bin,:])
 
 def bin_velocity(velocities, bin_indices):
     """ Returns the sum of square of all velocities in the given bin 
@@ -76,7 +77,7 @@ def bin_velocity(velocities, bin_indices):
     bin_indices -- consist of the given bins indices
     
     """
-    return np.sum(np.power(velocities[bin_indices,:],2))
+    return np.sum(np.power(velocities,2))
 
 def bin_sigma(velocities,bin_indices):
     """ Returns sigma squared of the given bin.
@@ -88,19 +89,20 @@ def bin_sigma(velocities,bin_indices):
     """
     return bin_velocity(velocities,bin_indices)/(velocities.shape[0])
 
-def bin_volume(positions, bin_indices):
+def bin_volume(positions, bin):
     """ Returns the volume of the bin.
     
     Assumption: Each bin is of a spherical shape, thus one substract two spheres from each other."""
-    r_a = dist.euclidean(np.array([0,0,0]), positions[bin_indices[0],:])
-    r_b = dist.euclidean(np.array([0,0,0]), positions[bin_indices[-1],:])
-    return 4.0/3.0 * np.pi * (r_b**2 - r_a**2)
+    r_a = dist.euclidean(np.array([0,0,0]), positions[bin[0],:])
+    r_b = dist.euclidean(np.array([0,0,0]), positions[bin[-1],:])
+    return 4.0/3.0 * np.pi * (r_b**3 - r_a**3)
 def bin_density(positions, bin):
     """ Returns density of the given bin. """
-    return len(bin)/bin_volume(positions,bin)
+    return len(bin)*10**(-4)/bin_volume(positions,bin)
     
 def bin_distance(pos,bin):
-    return np.sum(GetDistancesFromOrigo(pos))/len(bin)
+    """ """
+    return np.sum(GetDistancesFromOrigo(pos[bin,:]))/len(bin)
 
 if __name__ == "__main__":
     #Loads the data...
