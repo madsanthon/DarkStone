@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""OT-BruteForce.py: Brute force implementation of a n-body simulator"""
+"""bruteforce.py: Brute force implementation of a n-body simulator"""
 
 __author__      = "Orhan Toy"
 __credits__     = ["Mads Anthon", "Mossa Merhi"]
@@ -10,8 +10,7 @@ __version__     = "1.0"
 
 import numpy as np
 
-def nBody(data, dt):
-    G = 6.67e-11      # Gravitational constant
+def nBody(data, dt, G=6.67e-11):
     N = data.shape[0] # Number of particles
 
     dataCopy = np.copy(data)
@@ -50,7 +49,7 @@ if __name__ == '__main__':
     TIME_START = time.time() # Used for benchmarking
 
     path = os.path.dirname(os.path.realpath(__file__))
-    dataFile = path + '/../initialData-N10.txt' # Default test file
+    dataFile = path + '/initialData-N10.txt' # Default test file
     
     if len(sys.argv) > 1:
         dataFile = sys.argv[1]

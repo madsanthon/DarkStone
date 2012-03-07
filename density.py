@@ -12,7 +12,7 @@ import sys
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-from BruteForce.ot import *
+from bruteforce import *
 
 def densityPlot(data, t):
     # Determine center of mass

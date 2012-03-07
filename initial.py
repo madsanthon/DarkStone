@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""initialDataGenerator.py: This file generates <N> particle start
+"""initial.py: This file generates <N> particle start
 positions and velocities. The data is saved into a file called 
 initialData-N<N>.txt, where <N> is the number of particles generated."""
 
@@ -24,8 +24,10 @@ pos = np.random.rand(N, 3) - 0.5*np.ones((N, 3))
 m = np.random.rand(N, 1)
 m = m/np.linalg.norm(m, 1) # (Sum) normalization
 
-data = np.hstack((pos, m))
+# Generate velocities, initially set to zero
+vel = np.zeros((N, 3))
 
+data = np.hstack((pos, vel, m))
 np.savetxt('initialData-N' + str(N) + '.txt', data)
 
 print 'Data file with', N, 'particles has been generated.'
