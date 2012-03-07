@@ -27,7 +27,7 @@ def nBody(data, dt, G=6.67e-11):
             r  = dataCopy[j][0:3] - si
             mj = dataCopy[j][6] # Mass of j'th particle
             if np.linalg.norm(r) > 0.0: # Avoid division by zero
-                a = a + mj/(np.linalg.norm(r)**2)*r
+                a = a + mj/(np.linalg.norm(r)**3)*r
 
         a = G*a
 
