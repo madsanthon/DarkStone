@@ -12,8 +12,6 @@ import sys
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-
-from bruteforce import *
 from bins import *
 
 if __name__ == '__main__':
@@ -24,18 +22,18 @@ if __name__ == '__main__':
         dataFile = sys.argv[1]
 
     data = np.loadtxt(dataFile)
-    
+
     N = data.shape[0]
     nBins = 5
     useCM = False
-    
+
     binnedIndices, distances = binnedIndicesAndDistances(data, nBins = nBins, useCM = useCM)
-    
+
     binRadius = np.array([])
     binDensity = np.array([])
     for particleIndices in binnedIndices:
         binRadius = np.append(binRadius, np.sum(distances[particleIndices])/particleIndices.shape[0])
-        
+
         m = np.sum(data[particleIndices][:, 6]) # Total mass of particles in bin
         rInner = distances[particleIndices[0]]
         rOuter = distances[particleIndices[-1]]
@@ -47,9 +45,9 @@ if __name__ == '__main__':
     ax.set_xlabel('Bin radius')
     ax.set_ylabel('Density')
     ax.set_title('N-body simulation with ' + str(N) + ' particles')
-    
+
     ax.loglog(binRadius, binDensity, 'bo:')
-    
+
     ## Fit
     ## ----------------------------------------------------------------
     ## Nedenstående kode fitter ikke, men er bare det som Mossa skrev,
@@ -65,5 +63,5 @@ if __name__ == '__main__':
     #rho_ax.loglog(bin_distances,map(rho_function,bin_distances),'x')
     #rho_ax.set_xlim(0.01,100)
     #rho_fig.savefig("Tætheden som funktion af middel radius.png")
-    
+
     plt.show()

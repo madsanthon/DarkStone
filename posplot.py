@@ -25,20 +25,21 @@ if __name__ == '__main__':
 
     data = np.loadtxt(dataFile)
     N = data.shape[0]
-    
+
     nBins = 5
     useCM = False
 
     plt.close('all')
-    
+
     fig = plt.figure(1)
     ax = fig.add_subplot(111, projection='3d')
+    ax.set_title('Particles, colored according to bin')
     ax.set_xlabel('x')
     ax.set_ylabel('y')
     ax.set_zlabel('z')
-    
+
     binnedIndices, distances = binnedIndicesAndDistances(data, nBins = nBins, useCM = useCM)
-    
+
     for particleIndices in binnedIndices:
         color = colors.rgb2hex(np.random.rand(3))
         pos = data[particleIndices][:, 0:3]
@@ -49,7 +50,7 @@ if __name__ == '__main__':
         ##
         #absLogPos = np.log(np.abs(pos[:, 0:3]))
         #ax.scatter(absLogPos[:, 0], absLogPos[:, 1], absLogPos[:, 2], c=color)
-    
+
     ax.set_xlim3d(-10, 10)
     ax.set_ylim3d(-10, 10)
     ax.set_zlim3d(-10, 10)

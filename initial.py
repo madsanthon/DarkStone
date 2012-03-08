@@ -2,15 +2,18 @@
 # -*- coding: utf-8 -*-
 
 """initial.py: This file generates <N> particle start
-positions and velocities. The data is saved into a file called 
+positions and velocities. The data is saved into a file called
 initialData-N<N>.txt, where <N> is the number of particles generated."""
 
 __author__      = "Mossa Merhi"
 __credits__     = ["Mads Anthon", "Mossa Merhi", "Orhan Toy"]
 __version__     = "0.7"
 
-import numpy as np
+import os
 import sys
+import numpy as np
+
+path = os.path.dirname(os.path.realpath(__file__))
 
 N = 10 # Default
 
@@ -28,6 +31,6 @@ m = m/np.linalg.norm(m, 1) # (Sum) normalization
 vel = np.zeros((N, 3))
 
 data = np.hstack((pos, vel, m))
-np.savetxt('test/initialData-N' + str(N) + '.txt', data)
+np.savetxt(path + '/test/initialData-N' + str(N) + '.txt', data)
 
 print 'Data file with', N, 'particles has been generated.'
