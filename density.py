@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""density.py: Takes particle data file, runs N-body simulation and then splits particles into bins and plots density"""
+"""density.py: Takes end data file and plots bin radius vs density"""
 
 __author__      = "Orhan Toy"
 __credits__     = ["Mads Anthon", "Mossa Merhi"]
@@ -12,71 +12,58 @@ import sys
 import os
 import numpy as np
 import matplotlib.pyplot as plt
+
 from bruteforce import *
+from bins import *
 
-def densityPlot(data, t):
-    # Determine center of mass
-    centerOfMass = np.zeros(3)
-    for i in range(N):
-        centerOfMass = centerOfMass + data[i][6]*data[i][0:3]
-    print 'Center of mass:', centerOfMass
+if __name__ == '__main__':
+    path = os.path.dirname(os.path.realpath(__file__))
+    dataFile = path + '/test/data.e2.12.txt' # Default test file
 
-    # Determine euclidean distances from center of mass to particles
-    distances = np.zeros(N)
-    for i in range(N):
-        distances[i] = np.linalg.norm(data[i][0:3] - centerOfMass)
+    if len(sys.argv) > 1:
+        dataFile = sys.argv[1]
 
-    distances = np.sort(distances) # Sort
-
-    # Split particles into bins
-    nBins = 5
-    particlesPerBin = N / nBins
-    binRadius = np.zeros(nBins)
-    binDensity = np.zeros(nBins)
-    for i in range(nBins):
-        if i < nBins - 1:
-            binRadius[i] = distances[particlesPerBin]
-            binDensity[i] = particlesPerBin / (4.0/3.0*np.pi*binRadius[i]**3)
-            distances = distances[particlesPerBin:]
-        else:
-            binRadius[i] = np.max(distances)
-            binDensity[i] = len(distances) / (4.0/3.0*np.pi*binRadius[i]**3)
+    data = np.loadtxt(dataFile)
     
-    plt.clf()
-    fig = plt.figure()
-    ax = fig.add_subplot(111)
-    ax.plot(binRadius, np.log(binDensity), 'bo:')
+    N = data.shape[0]
+    nBins = 5
+    useCM = False
+    
+    binnedIndices, distances = binnedIndicesAndDistances(data, nBins = nBins, useCM = useCM)
+    
+    binRadius = np.array([])
+    binDensity = np.array([])
+    for particleIndices in binnedIndices:
+        binRadius = np.append(binRadius, np.sum(distances[particleIndices])/particleIndices.shape[0])
+        
+        m = np.sum(data[particleIndices][:, 6]) # Total mass of particles in bin
+        rInner = distances[particleIndices[0]]
+        rOuter = distances[particleIndices[-1]]
+        V = 4.0/3.0*np.pi*(rOuter**3 - rInner**3)
+        binDensity = np.append(binDensity, m/V)
+
+    plt.close('all')
+    ax = plt.subplot(111)
     ax.set_xlabel('Bin radius')
     ax.set_ylabel('Density')
-    ax.set_xlim([0, 2])
-    ax.set_ylim([-10, 10])
-    ax.set_title('N-body simulation with ' + str(N) + ' particles @ t = ' + str(t))
-    plt.savefig("density-%02d.png" % (t, ))
-
-path = os.path.dirname(os.path.realpath(__file__))
-dataFile = path + '/initialData-N10.txt' # Default test file
-
-if len(sys.argv) > 1:
-    dataFile = sys.argv[1]
-
-data = np.loadtxt(dataFile)
-
-G = 1                     # Gravitational constant
-N = data.shape[0]         # Number of particles
-rho = N/1.0               # Number of particles per 1m^3
-dynT = 1.0/np.sqrt(G*rho) # Dynamic time
-dt = 0.1                  # Time step, relative to the dynamic time
-T = 4                     # Number of dynamic times to iterate over
-
-print 'T =', T
-
-# Iterate over T (theoretic) dynamic times
-for t in np.arange(0, T, dt):
-    print t
-    data = nBody(data, dynT*dt, G)
+    ax.set_title('N-body simulation with ' + str(N) + ' particles')
     
-    if 0.0 + int(t) == t:
-        densityPlot(data, t)
-
-# Save end data
-np.savetxt('endData-N' + str(N) + '.txt', data)
+    ax.loglog(binRadius, binDensity, 'bo:')
+    
+    ## Fit
+    ## ----------------------------------------------------------------
+    ## Nedenstående kode fitter ikke, men er bare det som Mossa skrev,
+    ## da vi var hos Steen i onsdags d. 7. marts
+    ## ----------------------------------------------------------------
+    ##
+    #rho_fig,rho_ax = plot_density(pos,bin_indices)
+    #rho_0 = 1/(2 * np.pi)
+    #r_s = 1
+    #bin_distances = [r for r in map(lambda bin: bin_distance(pos,bin),bin_indices)]
+    #
+    #rho_function = lambda r: rho_0/((r/r_s)*(1 + r/r_s)**3 )
+    #rho_ax.loglog(bin_distances,map(rho_function,bin_distances),'x')
+    #rho_ax.set_xlim(0.01,100)
+    #rho_fig.savefig("Tætheden som funktion af middel radius.png")
+    
+    plt.show()

@@ -28,6 +28,6 @@ m = m/np.linalg.norm(m, 1) # (Sum) normalization
 vel = np.zeros((N, 3))
 
 data = np.hstack((pos, vel, m))
-np.savetxt('initialData-N' + str(N) + '.txt', data)
+np.savetxt('test/initialData-N' + str(N) + '.txt', data)
 
 print 'Data file with', N, 'particles has been generated.'

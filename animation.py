@@ -16,11 +16,11 @@ import visual
 from bruteforce import *
 
 path = os.path.dirname(os.path.realpath(__file__))
-dataFile = path + '/initialData-N10.txt'
+dataFile = path + '/test/initialData-N10.txt'
 
 data = np.loadtxt(dataFile)
 N = data.shape[0] # Number of points
-dt = 10000 # Time step, seconds
+dt = 0.01 # Time step, seconds
 
 print 'Simulating', N, 'particles...'
 
@@ -33,7 +33,7 @@ for i in range(N):
     particles.append(particle)
 
 while 1:
-    data = nBody(data, dt)
+    data = nBody(data, dt, G=1.0)
     
     # Update positions
     for i in range(N):
